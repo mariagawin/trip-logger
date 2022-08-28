@@ -8,15 +8,19 @@ import mongoose from "mongoose";
 //   family: 4, // Use IPv4, skip trying IPv6
 // };
 
+const localDBName = "trip-logger";
+const { MONGODB_URI = `mongodb://127.0.0.1/${localDBName}` } = process.env;
+
+console.log(`MONGODB_URI ${MONGODB_URI}`);
+
 const options = {};
 
 try {
-  await mongoose.connect(uri, options);
+  await mongoose.connect(MONGODB_URI, options);
 } catch (error) {
-  console.log(first)(error);
+  console.log(error);
 }
 
 mongoose.connection.on("error", (err) => {
-  console.log(object);
-  err;
+  console.log(err);
 });

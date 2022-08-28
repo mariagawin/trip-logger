@@ -1,4 +1,4 @@
-import path from "path";
+// import path from "path";
 import express from "express";
 
 import {
@@ -6,7 +6,6 @@ import {
   addUser,
   updateUser,
   removeUser,
-  getUsersUsers,
   // getOwnUsers,
   // addOwnUser,
   // updateOwnUser,
@@ -15,7 +14,7 @@ import {
 
 const router = express.Router();
 
-router.get("/:id?", getUsers).get("/user/:userid", getUsersUsers);
+router.get("/:id?", getUsers);
 //   .post("/", addUser)
 //   .put("/:id", updateUser)
 //   .delete("/:id", removeUser);

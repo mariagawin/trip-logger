@@ -1,4 +1,4 @@
-import Trip from "../models/trips/trip.model.js";
+import Trip from "../models/trip.model.js";
 // const { errorHandler } = require("./utils");
 // const logger = require("./../logger");
 
@@ -14,6 +14,26 @@ export function getTrips(req, res) {
   }
   Trip.find(query)
     // .populate("items")
+    .exec((err, trips) => {
+      if (err) return errorHandler(res, err);
+      if (req.params.id && trips.length === 0)
+        return res.status(404).send({ message: "No trip with that ID" });
+      return res.status(200).json(trips);
+    });
+}
+
+export function getUsersTrips(req, res) {
+  console.log(req.user);
+  let query = {
+    sub: req.user.sub, // ensure own trips only
+  };
+
+  if (req.params.id) {
+    query._id = req.params.id;
+  }
+
+  Trip.find(query)
+    .populate("place")
     .exec((err, trips) => {
       if (err) return errorHandler(res, err);
       if (req.params.id && trips.length === 0)
